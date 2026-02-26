@@ -16,20 +16,20 @@ namespace WebAPIDemo.Controllers
             this.service = service;
         }
 
-        // GET: api/Task/GetAllTasks
-        //[HttpGet]
-        //[Route("GetAllTasks")]
-        //public IActionResult Get()
-        //{
-        //    try
-        //    {
-        //        return new ObjectResult(service.GetAllTasks());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+        //GET: api/Task/GetAllTasks
+       [HttpGet]
+       [Route("GetAllTasks")]
+        public IActionResult Get()
+        {
+            try
+            {
+                return new ObjectResult(service.GetAllTasks());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
         // GET: api/Task/GetTaskById/5
         [HttpGet]
