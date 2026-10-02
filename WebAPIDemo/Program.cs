@@ -8,62 +8,53 @@ using WebAPIDemo.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
 
-
-//builder.Services.AddSwaggerGen();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllers();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ITaskRepository,TaskRepository>();
+builder.Services.AddScoped<ITaskService,TaskService>();
+builder.Services.AddScoped<IProjectRepository,ProjectRepository>();
+builder.Services.AddScoped<IProjectService,ProjectService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
-
-
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiDemo", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "WebApiDemo",
+        Version = "v1"
+    });
 });
 
-
 var app = builder.Build();
-
-app.UseCors("AllowAngular");
-
-app.UseCors("CorsPolicy");
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-app.MapGet("/", () => "Web API is running successfully");
+
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseCors("AllowAngular");
+
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiDemo v1"));
 
+app.MapGet("/", () => "Web API is running successfully");
 
 app.Run();

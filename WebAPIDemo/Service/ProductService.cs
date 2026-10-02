@@ -5,11 +5,11 @@ namespace WebAPIDemo.Service
 {
     public interface IProductService
     {
-      IEnumerable<Product> GetAllProducts();
-      Product GetProductById(int id);
-      int AddProduct(Product product);
-      int UpdateProduct(Product product);
-      int DeleteProduct(int id);
+        IEnumerable<Product> GetAllProducts();
+        Product GetProductById(int id);
+        int AddProduct(Product product);
+        int UpdateProduct(Product product);
+        int DeleteProduct(int id);
         IEnumerable<TaskItem> GetAllTasks();
         TaskItem GetTaskById(int id);
         int AddTask(TaskItem task);

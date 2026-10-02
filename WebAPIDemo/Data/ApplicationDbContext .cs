@@ -12,5 +12,7 @@ namespace WebAPIDemo.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<Projects> Projects { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }

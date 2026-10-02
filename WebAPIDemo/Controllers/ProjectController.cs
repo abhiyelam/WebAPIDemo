@@ -1,29 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAPIDemo.Model;
 using WebAPIDemo.Service;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPIDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaskController : ControllerBase
+    // GET: api/<ProjectController>
+public class ProjectController : ControllerBase
     {
-        private readonly ITaskService service;
+        private readonly IProjectService service;
 
-        public TaskController(ITaskService service)
+        public ProjectController(IProjectService service)
         {
             this.service = service;
         }
 
-        //GET: api/Task/GetAllTasks
-       [HttpGet]
-       [Route("GetAllTasks")]
+        // GET: api/Project/GetAllProjects
+        [HttpGet]
+        [Route("GetAllProjects")]
         public IActionResult Get()
         {
             try
             {
-                return new ObjectResult(service.GetAllTasks());
+                return new ObjectResult(service.GetAllProjects());
             }
             catch (Exception ex)
             {
@@ -31,14 +33,14 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        // GET: api/Task/GetTaskById/5
+        // GET: api/Project/GetProjectById/5
         [HttpGet]
-        [Route("GetTaskById/{id}")]
+        [Route("GetProjectById/{id}")]
         public IActionResult Get(int id)
         {
             try
             {
-                return new ObjectResult(service.GetTaskById(id));
+                return new ObjectResult(service.GetProjectById(id));
             }
             catch (Exception ex)
             {
@@ -46,14 +48,14 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        // POST: api/Task/AddTask
+        // POST: api/Project/AddProject
         [HttpPost]
-        [Route("AddTask")]
-        public IActionResult Post([FromBody] TaskItem task)
+        [Route("AddProject")]
+        public IActionResult Post([FromBody] Projects project)
         {
             try
             {
-                int result = service.AddTask(task);
+                int result = service.AddProject(project);
 
                 if (result == 1)
                 {
@@ -70,14 +72,14 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        // PUT: api/Task/UpdateTask
+        // PUT: api/Project/UpdateProject
         [HttpPut]
-        [Route("UpdateTask")]
-        public IActionResult Put([FromBody] TaskItem task)
+        [Route("UpdateProject")]
+        public IActionResult Put([FromBody] Projects project)
         {
             try
             {
-                int result = service.UpdateTask(task);
+                int result = service.UpdateProject(project);
 
                 if (result == 1)
                 {
@@ -94,14 +96,14 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        // DELETE: api/Task/DeleteTask/5
+        // DELETE: api/Project/DeleteProject/5
         [HttpDelete]
-        [Route("DeleteTask/{id}")]
+        [Route("DeleteProject/{id}")]
         public IActionResult Delete(int id)
         {
             try
             {
-                int result = service.DeleteTask(id);
+                int result = service.DeleteProject(id);
 
                 if (result == 1)
                 {
